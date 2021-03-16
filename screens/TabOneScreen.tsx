@@ -2,11 +2,12 @@ import * as React from 'react';
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
 
-import { StyleSheet, Button } from 'react-native';
-
+import { StyleSheet, Button, ScrollView } from 'react-native';
+import {ListItem} from 'react-native-elements';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { useState } from 'react';
+import DatingProfileThumbnail  from './DatingProfileThumbnail';
 
 
 
@@ -47,17 +48,36 @@ export default function TabOneScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1, alignItems: 'center'}}>
       <Text style={styles.title}>{firstName}</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
       <Button
         onPress={fetchUsers}
         title="Get Users"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />
-    </View>
+      <View style={{width: `${95}%`, height: `${50}%`, overflow: 'hidden', padding: 10, borderWidth: 1}}>
+        <ScrollView
+          horizontal={true}
+          contentContainerStyle={{ width: `${100 * 3}%`}}
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={200}
+          decelerationRate="fast"
+          pagingEnabled>
+              <View style={{borderWidth: 2, width: `${32}%`, margin: 4}}>
+                <DatingProfileThumbnail></DatingProfileThumbnail>
+              </View>
+            <View style={{borderWidth: 2, width: `${32}%`, margin: 4}}>
+              <DatingProfileThumbnail></DatingProfileThumbnail>
+            </View>
+            <View style={{borderWidth: 2, width: `${32}%`, margin: 4}}>
+              <DatingProfileThumbnail></DatingProfileThumbnail>
+            </View>
+        </ScrollView>
+      </View>
+        
+      </View>
+    
   );
 
 }
