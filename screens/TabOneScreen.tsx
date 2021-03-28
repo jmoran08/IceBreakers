@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {Component} from 'react';
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
 
@@ -8,8 +8,9 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { useState } from 'react';
 import DatingProfileThumbnail  from './DatingProfileThumbnail';
-
-
+import Settings from './Settings';
+import { Ionicons } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function TabOneScreen() {
   const [firstName, setFirstName] = useState([]);
@@ -24,6 +25,7 @@ export default function TabOneScreen() {
     appId: "1:978108800382:web:23be0378281cf6d240e72f",
     measurementId: "G-YZFFQ5SV85"
   };
+  
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }else {
@@ -33,7 +35,7 @@ export default function TabOneScreen() {
 
   //Jen Note 2/28 - For now this just sets the name to the last user retrieved, was just
   // trying to get db to work :)
-  function fetchUsers(){
+  function fetchUsers() {
     db.collection('Users')
     .get()
     .then(snapshot => {
@@ -46,10 +48,16 @@ export default function TabOneScreen() {
       console.log('Error getting document', err);
     });
   }
+  function displaySettings(){
+    alert('hello');
+  }
 
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', width: `${100}%`}}>
       <Text style={styles.title}>{firstName}</Text>
+      <Ionicons onPress={displaySettings} style={{marginLeft: 10}} name="md-settings" size={32} color="black" />
+      </View>
       <Button
         onPress={fetchUsers}
         title="Get Users"
@@ -79,8 +87,9 @@ export default function TabOneScreen() {
       </View>
     
   );
+  }
 
-}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -98,7 +107,6 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
-
 
 
 
